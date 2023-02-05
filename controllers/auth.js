@@ -12,7 +12,7 @@ const login = async(req, res = response) => {
     const { correo, password } = req.body;
 
     try {
-      
+
         // Verificar si el email existe
         const usuario = await Usuario.findOne({ correo });
         if ( !usuario ) {
@@ -49,7 +49,7 @@ const login = async(req, res = response) => {
         res.status(500).json({
             msg: 'Hable con el administrador'
         });
-    }   
+    }
 
 }
 
@@ -57,7 +57,7 @@ const login = async(req, res = response) => {
 const googleSignin = async(req, res = response) => {
 
     const { id_token } = req.body;
-    
+
     try {
         const { correo, nombre, img } = await googleVerify( id_token );
 
@@ -86,12 +86,12 @@ const googleSignin = async(req, res = response) => {
 
         // Generar el JWT
         const token = await generarJWT( usuario.id );
-        
+
         res.json({
             usuario,
             token
         });
-        
+
     } catch (error) {
 
         res.status(400).json({
@@ -99,14 +99,24 @@ const googleSignin = async(req, res = response) => {
         })
 
     }
-
-
-
 }
 
+const renovarToken = async(req, res = response) => {
+
+    const { usuario } = req
+
+    // Generar el JWT
+    const token = await generarJWT( usuario.id );
+
+    res.json({
+        usuario,
+        token
+    })
+}
 
 
 module.exports = {
     login,
-    googleSignin
+    googleSignin,
+    renovarToken
 }

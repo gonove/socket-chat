@@ -30,6 +30,8 @@ formulario.addEventListener( 'submit', e => {
             }
 
             localStorage.setItem('token', token)
+            // redireccion de pagina
+            window.location = 'chat.html'
         })
         .catch( err => {
             console.log(err);
@@ -58,7 +60,9 @@ function handleCredentialResponse(response) {
         .then( ({token}) => {
             // console.log(data)
             localStorage.setItem( 'token', token )
-            console.log('❤️');
+
+            // redireccion de pagina
+            window.location = 'chat.html'
         })
         .catch( console.log );
 }
