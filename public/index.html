@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,74 +9,49 @@
     <title>Hey! ❤️</title>
 </head>
 <body>
-    <h1>Google Sing In</h1>
-    <hr>
-    <div id="g_id_onload"
-        data-client_id="585119453771-oksnlrtr41ptkh2a1vbifbcmd2j4ruot.apps.googleusercontent.com"
-        data-auto_prompt="false"
-        data-callback="handleCredentialResponse">
-      </div>
-      <div class="g_id_signin"
-         data-type="standard"
-         data-size="large"
-         data-theme="outline"
-         data-text="sign_in_with"
-         data-shape="rectangular"
-         data-logo_alignment="left">
-      </div>
 
-    <button id="google-signout" class="btn btn-danger">
-        SignOut
-    </button>
+    <div class="container">
 
+        <div class="row mt-5">
+            <div class="col-sm-6">
+                <h1 class="mt-2">Google Sing In</h1>
+                <hr>
+                <div id="g_id_onload"
+                    data-client_id="585119453771-oksnlrtr41ptkh2a1vbifbcmd2j4ruot.apps.googleusercontent.com"
+                    data-auto_prompt="false"
+                    data-callback="handleCredentialResponse">
+                </div>
+                <div class="g_id_signin"
+                    data-type="standard"
+                    data-size="large"
+                    data-theme="outline"
+                    data-text="sign_in_with"
+                    data-shape="rectangular"
+                    data-logo_alignment="left">
+                </div>
+
+                <button id="google-signout" class="btn btn-danger mt-3">
+                    SignOut
+                </button>
+            </div>
+
+            <div class="col-sm-6">
+                <h1>Login</h1>
+                <hr>
+
+                <form class="d-grid">
+                    <input type="email" name="correo" class="form-control mb-2" placeholder="Correo">
+                    <input type="text" name="password" class="form-control mb-2" placeholder="Password">
+
+                    <button class="btn btn-primary">
+                        Ingresar
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-
-    <script>
-
-        // Google Token - ID TOKEN
-        //console.log('id_token', response.credential)
-        // console.log(response);
-        // console.log(response.credential);
-        function handleCredentialResponse(response) {
-            const id_token = response.credential
-            var body = { id_token };
-            var url = (window.location.hostname.includes('localhost') )
-                ? 'http://localhost:8080/api/auth/google'
-                : 'https://abcde.herokuapp.com/api/auth/google'
-
-            var myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-
-            var myInit = { method: 'POST',
-                headers: myHeaders,
-                mode: 'cors',
-                cache: 'default',
-                body: JSON.stringify(body) };
-
-            var myRequest = new Request(url, myInit);
-
-            fetch( myRequest )
-                .then(resp => resp.json() )
-                .then(data => {
-                    console.log(data)
-                    localStorage.setItem( 'email', data.usuario.correo )
-                    //localStorage.setItem( 'email', 'Hey man!' )
-                    console.log('done');
-                })
-                .catch( console.log );
-        }
-
-        const button = document.getElementById('google-signout');
-        button.onclick = () => {
-            console.log(google.accounts.id);
-            google.accounts.id.disableAutoSelect()
-
-            google.accounts.id.revoke( localStorage.getItem('email'), done => {
-                localStorage.clear()
-                location.reload()
-            } )
-        }
-
-    </script>
+    <script src="./js/auth.js"></script>
 </body>
 </html>
