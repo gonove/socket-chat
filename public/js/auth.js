@@ -1,6 +1,6 @@
 let url = (window.location.hostname.includes('localhost') )
 ? 'http://localhost:8080/api/auth/'
-: 'https://abcde.herokuapp.com/api/auth/'
+: 'https://socket-chat-production-cdd7.up.railway.app/'
 
 
 const formulario = document.querySelector('form')
