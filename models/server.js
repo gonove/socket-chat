@@ -75,7 +75,8 @@ class Server {
     }
 
     sockets(){
-        this.io.on( 'connection', socketController )
+        //Enviamos el io en el controlador para poner emitir a todos los clientes
+        this.io.on( 'connection', (socket) => socketController( socket, this.io ) )
     }
 
     listen() {
